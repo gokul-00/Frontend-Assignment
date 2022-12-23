@@ -1,23 +1,42 @@
-import logo from './logo.svg';
+import React from 'react'
 import './App.css';
+import { Divider, Grid, Segment, Icon } from 'semantic-ui-react'
+import JsonEditor from './JsonEditor';
+import RenderSegment from './RenderSegment';
+
+const data = {
+  "sort": 1,
+  "label": "Pizza Name",
+  "description": "enter pizza name",
+  "validate": {
+    "required": true,
+    "immutable": false
+  },
+  "jsonKey": "name",
+  "uiType": "Input",
+  "icon": "",
+  "level": 0,
+ "placeholder": ""
+}
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Segment placeholder>
+    <Grid columns={2} relaxed='very' stackable>
+      <Grid.Column>
+        <JsonEditor />
+      </Grid.Column>
+
+      <Grid.Column verticalAlign='middle'>
+        <RenderSegment UISchema={data} />
+      </Grid.Column>
+    </Grid>
+
+    <Divider vertical>
+      <Icon name="arrow circle right" size='big' />
+    </Divider>
+  </Segment>
     </div>
   );
 }
