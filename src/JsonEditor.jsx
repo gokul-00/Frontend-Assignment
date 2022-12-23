@@ -1,11 +1,14 @@
-import React, {useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Editor from "@monaco-editor/react";
+import JsonContext from './Context/JsonContext';
 
 export default function JsonEditor() {
-    const [input, SetInput] = useState("");
-    const processJsonInput = (str) => {
-      SetInput(str);
-    }
+    const {data, setData} = useContext(JsonContext);
+    console.log(data);
+    const [value, setvalue] = useState(data);
+    useEffect(()=>{
+        setData(value);
+    },[value])
   return (
     <div>
         <Editor
@@ -13,9 +16,8 @@ export default function JsonEditor() {
             width={`100%`}
             language={"json"}
             theme={"vs-dark"}
-            value={input}
-            defaultValue=""
-            onChange={processJsonInput}
+            value={value}
+            onChange={setvalue}
         />
     </div>
   )

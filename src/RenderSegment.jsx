@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import TextInputField from './components/TextInputField'
+import JsonContext from './Context/JsonContext'
+import RadioFields from './components/RadioFields';
 
-function RenderSegment({UISchema}) {
+function RenderSegment() {
+    const UISchema = useContext(JsonContext);
+    const [data, setdata] = useState(UISchema.data);
+    useEffect(()=>{
+        setdata(UISchema.data)
+    },[UISchema.data])
   return (
     <div>
-        <TextInputField data={UISchema} />
+        <TextInputField data={JSON.parse(data)} />
+        <RadioFields />
     </div>
   )
 }

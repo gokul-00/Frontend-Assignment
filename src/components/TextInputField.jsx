@@ -6,13 +6,14 @@
 //     "description": "",
 //     "validate": {
 //       "required": true,
-//       "immutable": false
+//       "immutable": false,
+//       "pattern": "",
 //     },
 //     "jsonKey": "name",
 //     "uiType": "Input",
 //     "icon": "",
 //     "level": 0,
-//    "placeholder": ""
+//     "placeholder": ""
 // }
 
 import { Form, Label } from "semantic-ui-react";
