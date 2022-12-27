@@ -1,6 +1,15 @@
+import { useContext, useEffect, useState } from "react";
+import RadioFields from "./RadioFields";
+import SelectField from "./SelectField";
+import SwitchField from "./SwitchField";
+import TextInputField from "./TextInputField";
+import { FormLabel } from "@chakra-ui/react";
+import { ignoreCondition } from "../utils/helper";
+import IgnoreField from "./IgnoreField";
+import JsonContext from "../Context/JsonContext";
 
 
-// {
+// const data = {
 //     "sort": 4,
 //     "label": "Pizza_type",
 //     "description": "",
@@ -188,18 +197,34 @@
 //     ]
 //   }
 
-import { Form, Label } from "semantic-ui-react";
+// parse error
+const sortFunc = (data) => {
+  // let newData = data ? JSON.parse(data) : []; 
+  // if(newData.length == undefined) newData = [newData]
+  // return newData.length > 1 ? newData.sort((a,b) => a.sort - b.sort) : newData;
+}
 
-    
 
-
-const GroupField = ({data}) => {
+const GroupField = ({data, jsonKey}) => {
+  const [params, setParams] = useState(data.subParameters);
+  const {formData} = useContext(JsonContext);
+  useEffect(()=>{
+    setParams(data.subParameters);
+  },[data.subParameters])
   return (   
-    <Form.Field>
-        <label>{data.label}</label>
-        <input placeholder={data.placeholder} required={data.validate.required} />
-        {data.description &&  <Label pointing>Please enter a value</Label>}
-    </Form.Field>
+    <>
+      {/* <FormLabel>{.label}</FormLabel> */}
+        {params != undefined && params && params.map((item, i) => {
+            console.log(item.uiType)
+            if(item.uiType == 'Input') return <TextInputField data={item} jsonKey={`${jsonKey}.${item.jsonKey}`} key={i}/>
+            else if(item.uiType == 'Radio') return <RadioFields data={item} jsonKey={`${jsonKey}.${item.jsonKey}`} key={i}/>
+            else if(item.uiType == 'Select') return  <SelectField data={item} jsonKey={`${jsonKey}.${item.jsonKey}`} key={i}/>
+            else if(item.uiType == 'Switch') return <SwitchField data={item} jsonKey={`${jsonKey}.${item.jsonKey}`} key={i}/>
+            else if(item.uiType == "Group") return <GroupField data={item} jsonKey={`${jsonKey}.${item.jsonKey}`} key={i} />
+            else if(item.uiType == "Ignore") return <IgnoreField data={item} jsonKey={`${jsonKey}.${item.jsonKey}`} active={ignoreCondition(formData, item.conditions)} key={i} />
+            return <></>
+        })}
+    </>
 );
 };
 export default GroupField;

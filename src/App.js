@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import './App.css';
+import 'semantic-ui-css/semantic.min.css'
 import { Divider, Grid, Segment, Icon } from 'semantic-ui-react'
 import JsonEditor from './JsonEditor';
 import RenderSegment from './RenderSegment';
 import JsonContext from './Context/JsonContext';
-
+import { Box, ChakraProvider, Flex, Spacer } from '@chakra-ui/react'
 
 // const data = {
 //   "sort": 1,
@@ -21,41 +21,27 @@ import JsonContext from './Context/JsonContext';
 //  "placeholder": ""
 // }
 
+// const UIType = ['Input', 'Group', 'Radio', 'Ignore', 'Select', 'Switch'];
+
 function App() {
-  const [data, setData] = useState(JSON.stringify({
-    "sort": 1,
-    "label": "Pizza Name",
-    "description": "enter pizza name",
-    "validate": {
-      "required": true,
-      "immutable": false
-    },
-    "jsonKey": "name",
-    "uiType": "Input",
-    "icon": "",
-    "level": 0,
-   "placeholder": ""
-  }));
+  const [data, setData] = useState("");
+  const [formData, setFormData] = useState({});
   return (
-    <JsonContext.Provider value={{data, setData}}>
-      <div className="App">
-          <Segment placeholder>
-      <Grid columns={2} relaxed='very' stackable>
-        <Grid.Column>
-          <JsonEditor />
-        </Grid.Column>
-
-        <Grid.Column verticalAlign='middle'>
-          <RenderSegment />
-        </Grid.Column>
-      </Grid>
-
-      <Divider vertical>
-        <Icon name="arrow circle right" size='big' />
-      </Divider>
-    </Segment>
-      </div>
-    </JsonContext.Provider>
+    <ChakraProvider>
+      <JsonContext.Provider value={{data, setData, formData, setFormData}}>
+        <Box>
+          <Flex>
+            <Box w='100%' h='100vh' padding={5}> 
+              <JsonEditor />
+            </Box>
+            <Spacer />
+            <Box w='100%' h='100vh' padding={5}>
+              <RenderSegment />
+            </Box>
+          </Flex>
+        </Box>
+      </JsonContext.Provider>
+    </ChakraProvider>
   );
 }
 
