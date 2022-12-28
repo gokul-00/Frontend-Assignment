@@ -24,8 +24,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "precommit": "lint-staged"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": ["eslint --fix", "git add"]
+  },
+  
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -45,6 +50,9 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^4.0.0",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.1",
+    "prettier-plugin-eslint": "^1.0.2"
   }
 }

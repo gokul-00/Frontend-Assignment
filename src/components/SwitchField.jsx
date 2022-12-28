@@ -1,42 +1,38 @@
-import { FormControl, FormLabel, Switch, Tooltip } from "@chakra-ui/react";
-import { useContext, useEffect, useState } from "react";
-import JsonContext from "../Context/JsonContext";
-import { InfoIcon } from "@chakra-ui/icons";
+import { FormControl, FormLabel, Switch, Tooltip } from '@chakra-ui/react';
+import { useContext, useEffect, useState } from 'react';
+import JsonContext from '../Context/JsonContext';
+import { InfoIcon } from '@chakra-ui/icons';
 
-// const data = {
-//     "sort": 10000,
-//     "label": "Cheeseburst",
-//     "description": "",
-//     "validate": {
-//       "required": true,
-//       "defaultValue": false,
-//       "immutable": false
-//     },
-//     "jsonKey": "cheeseburst",
-//     "uiType": "Switch",
-//     "icon": "",
-//     "level": 2,
-//     "placeholder": ""
-//   }
 
-const SwitchField = ({data, jsonKey}) => {
-    const {formData, setFormData} = useContext(JsonContext);
-    const [active, setActive] = useState(data.validate.defaultValue);
-    const handleSwitch = (e) => {
-        setActive(e.target.value);
-    }
-    useEffect(()=>{
-        setFormData(prev => ({...prev, [jsonKey]:active}));
-    },[])
-    useEffect(()=>{
-        setFormData(prev => ({...prev, [jsonKey]:active}));
-    },[active])
+const SwitchField = ({ data, jsonKey }) => {
+  const { formData, setFormData } = useContext(JsonContext);
+  const [active, setActive] = useState(data.validate.defaultValue);
+  const handleSwitch = (e) => {
+    setActive(e.target.value);
+  };
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, [jsonKey]: active }));
+  }, []);
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, [jsonKey]: active }));
+  }, [active]);
   return (
-    <FormControl display='flex' alignItems='center' marginY={3}>
-        <FormLabel htmlFor={data.jsonKey} mb='0'>
-            {data.label}{data.description && <Tooltip label={data.description} fontSize='sm'><InfoIcon /></Tooltip>}
-        </FormLabel>
-        <Switch id={data.jsonKey} isRequired={data.validate.required} defaultChecked={active} onChange={handleSwitch} isReadOnly={data.validate.immutable} />
+    <FormControl display="flex" alignItems="center" marginY={3}>
+      <FormLabel htmlFor={data.jsonKey} mb="0">
+        {data.label}
+        {data.description && (
+          <Tooltip label={data.description} fontSize="sm">
+            <InfoIcon />
+          </Tooltip>
+        )}
+      </FormLabel>
+      <Switch
+        id={data.jsonKey}
+        isRequired={data.validate.required}
+        defaultChecked={active}
+        onChange={handleSwitch}
+        isReadOnly={data.validate.immutable}
+      />
     </FormControl>
   );
 };
