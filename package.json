@@ -2,7 +2,7 @@
   "name": "frontend-assignment",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/gokul-00/Frontend-Assignment",
+  "homepage": "/",
   "dependencies": {
     "@chakra-ui/icons": "^2.0.14",
     "@chakra-ui/react": "^2.4.4",
