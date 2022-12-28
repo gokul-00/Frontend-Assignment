@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import 'semantic-ui-css/semantic.min.css'
-import { Divider, Grid, Segment, Icon } from 'semantic-ui-react'
 import JsonEditor from './JsonEditor';
 import RenderSegment from './RenderSegment';
 import JsonContext from './Context/JsonContext';

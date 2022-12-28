@@ -1,7 +1,7 @@
-import { FormControl, FormLabel, Select } from "@chakra-ui/react";
+import { FormControl, FormLabel, Select, Tooltip } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
-import { Form } from "semantic-ui-react";
 import JsonContext from "../Context/JsonContext";
+import { InfoIcon } from "@chakra-ui/icons";
 
 // const data = {
 //     "sort": 10000,
@@ -57,16 +57,19 @@ const SelectField = ({data, jsonKey}) => {
   const {formData, setFormData} = useContext(JsonContext);
   const [val, setVal] = useState(data.validate.defaultValue);
   const handleChange = (e) => {
-    setVal(e.value);
+    setVal(e.target.value);
   }
   useEffect(()=>{
-    setFormData(prev => ({...prev, jsonKey:val}))
+    setFormData(prev => ({...prev, [jsonKey]:val}))
+  },[])
+  useEffect(()=>{
+    setFormData(prev => ({...prev, [jsonKey]:val}))
   },[val])
   return (
-    <FormControl>
+    <FormControl marginY={3}>
         <FormLabel>{data.label}</FormLabel>
-        <Select placeholder={data.placeholder} defaultValue={val} onChange={handleChange}>
-        {data.validate.options.map((val, i)=><option>{val.value}</option>)}
+        <Select placeholder={data.placeholder} required={data.validate.required} defaultValue={val} onChange={handleChange} isReadOnly={data.validate.immutable}>
+        {data.validate.options.map((val, i)=><option>{val.value}{val.description && <Tooltip label={val.description} fontSize='sm'><InfoIcon /></Tooltip>}</option>)}
         </Select>
     </FormControl>
   );

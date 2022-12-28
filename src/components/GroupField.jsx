@@ -3,7 +3,6 @@ import RadioFields from "./RadioFields";
 import SelectField from "./SelectField";
 import SwitchField from "./SwitchField";
 import TextInputField from "./TextInputField";
-import { FormLabel } from "@chakra-ui/react";
 import { ignoreCondition } from "../utils/helper";
 import IgnoreField from "./IgnoreField";
 import JsonContext from "../Context/JsonContext";
@@ -200,8 +199,8 @@ import JsonContext from "../Context/JsonContext";
 // parse error
 const sortFunc = (data) => {
   // let newData = data ? JSON.parse(data) : []; 
-  // if(newData.length == undefined) newData = [newData]
-  // return newData.length > 1 ? newData.sort((a,b) => a.sort - b.sort) : newData;
+  if(data.length == undefined) data = [data]
+  return data.length > 1 ? data.sort((a,b) => a.sort - b.sort) : data;
 }
 
 
@@ -214,7 +213,7 @@ const GroupField = ({data, jsonKey}) => {
   return (   
     <>
       {/* <FormLabel>{.label}</FormLabel> */}
-        {params != undefined && params && params.map((item, i) => {
+        {params != undefined && params && sortFunc(params).map((item, i) => {
             console.log(item.uiType)
             if(item.uiType == 'Input') return <TextInputField data={item} jsonKey={`${jsonKey}.${item.jsonKey}`} key={i}/>
             else if(item.uiType == 'Radio') return <RadioFields data={item} jsonKey={`${jsonKey}.${item.jsonKey}`} key={i}/>

@@ -96,12 +96,11 @@ import { ignoreCondition } from "../utils/helper";
 import JsonContext from "../Context/JsonContext";
 
 // parse error
-// const sortFunc = (data) => {
-//     let newData = data ? JSON.parse(data) : []; 
-//     if(newData.length == undefined) newData = [newData]
-//     // console.log(typeof(newData), newData.length, [newData]);
-//     return newData.length > 1 ? newData.sort((a,b) => a.sort - b.sort) : newData;
-// }
+const sortFunc = (data) => {
+    if(data.length == undefined) data = [data]
+    // console.log(typeof(newData), newData.length, [newData]);
+    return data.length > 1 ? data.sort((a,b) => a.sort - b.sort) : data;
+}
 
 const IgnoreField = ({data, jsonKey, active:enable}) => {
     const [params, setParams] = useState(data.subParameters);
@@ -118,7 +117,7 @@ const IgnoreField = ({data, jsonKey, active:enable}) => {
     return <div style={{
         display: !active && 'none'
     }}>
-            {params != undefined && params && params.map((item, i) => {
+            {params != undefined && params && sortFunc(params).map((item, i) => {
                 // console.log(item)
                 if(item.uiType == 'Input') return <TextInputField data={item} jsonKey={`${jsonKey}.${item.jsonKey}`} key={i}/>
                 else if(item.uiType == 'Radio') return <RadioFields data={item} jsonKey={`${jsonKey}.${item.jsonKey}`} key={i}/>
